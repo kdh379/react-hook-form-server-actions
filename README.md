@@ -23,4 +23,4 @@ pnpm dev
 ## Sample
 
 - [client side form](./src/app/client-side-form.tsx)
-- [actions](./src/actions.ts)
+- [actions](./src/app/actions.ts)
