@@ -1,0 +1,21 @@
+{
+  // tailwind @import
+  "css.lint.unknownAtRules": "ignore",
+  // eslint
+  "eslint.format.enable": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  // use ts path alias
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  // tailwindcss + cva
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "cva\\(([^)]*)\\)",
+      "[\"'`]([^\"'`]*).*?[\"'`]"
+    ],
+    [
+      "cx\\(([^)]*)\\)",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ]
+  ],
+}
