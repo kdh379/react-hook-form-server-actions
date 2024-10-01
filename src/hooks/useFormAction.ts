@@ -12,7 +12,7 @@ type UseFormActionProps<TFieldValues extends FieldValues = FieldValues, TContext
 
 export function useFormAction<TFieldValues extends FieldValues = FieldValues, TContext = any>({
   state,
-  onSuccess,
+  onSuccess: onSuccessProp,
   ...props
 }: UseFormActionProps<TFieldValues, TContext>) {
   const form = useForm({
@@ -20,7 +20,7 @@ export function useFormAction<TFieldValues extends FieldValues = FieldValues, TC
   });
 
   const handleSuccess = useCallback(() => {
-    onSuccess?.();
+    onSuccessProp?.();
   // eslint-disable-next-line
   }, []);
 

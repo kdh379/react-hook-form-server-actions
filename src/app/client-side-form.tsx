@@ -1,7 +1,6 @@
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
-import { useFormContext } from "react-hook-form";
 
 import { type FormValues, submitForm } from "@/app/actions";
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,7 @@ import { useFormAction } from "@/hooks/useFormAction";
 
 export default function ClientSideForm() {
 
-  const [state, formAction] = useFormState(submitForm, null);
+  const [state, dispatch] = useFormState(submitForm, null);
   const form = useFormAction<FormValues>({
     state,
     defaultValues: {
@@ -30,67 +29,63 @@ export default function ClientSideForm() {
   return (
     <Form {...form}>
       <form
-        action={formAction}
+        action={dispatch}
+        className="space-y-4"
       >
-        <FormFields />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center justify-between">
+                Email
+                <FormMessage />
+              </FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  type="email"
+                  placeholder="abc@abc.com"
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center justify-between">
+                Password
+                <FormMessage />
+              </FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  type="password"
+                  placeholder="********"
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <div className="flex justify-end">
+          <SubmitButton />
+        </div>
       </form>
     </Form>
   );
 }
 
-function FormFields() {
-  const form = useFormContext();
+function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <div className="space-y-4">
-      <FormField
-        control={form.control}
-        name="email"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="flex items-center justify-between">
-              Email
-              <FormMessage />
-            </FormLabel>
-            <FormControl>
-              <Input
-                {...field}
-                type="email"
-                placeholder="abc@abc.com"
-                disabled={pending}
-              />
-            </FormControl>
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="password"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="flex items-center justify-between">
-              Password
-              <FormMessage />
-            </FormLabel>
-            <FormControl>
-              <Input
-                {...field}
-                type="password"
-                placeholder="********"
-                disabled={pending}
-              />
-            </FormControl>
-          </FormItem>
-        )}
-      />
-      <div className="flex justify-end">
-        <Button
-          isLoading={pending}
-        >
-          Submit
-        </Button>
-      </div>
-    </div>
+    <Button
+      isLoading={pending}
+    >
+      Submit
+    </Button>
   );
 }
